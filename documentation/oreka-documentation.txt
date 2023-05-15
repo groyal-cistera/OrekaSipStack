@@ -1,0 +1,41 @@
+Oreka Developer's Guide
+
+Audio output files those will be written to the [install directory]/AudioRecordings under windows and in /var/log/orkaudio under Linux. They are classified according to the following scheme: 
+yyyy/MM/dd/hh 
+
+Audio file themselves are named after the following scheme:  yyyyMMdd_hhmmss_capturePort.extension 
+
+Configuration files are located in the install directory under Windows and in /etc/oreka under Linux. 
+ 
+Log files are located in the install directory under Windows and in /var/log/oreka under Linux.
+ 
+Plugins exist as dll files under Windows and as DSO (Dynamic Shared Objects) with .so extensions under Linux. They are located in [install dir]/audiocaptureplugins under Windows and in /usr/lib under Linux. 
+ 
+Configuring OrkAudio
+
+Configuration of OrkAudio is performed by modifying the config.xml file. 
+
+Audio compression can be tuned using the StorageAudioFormat config parameter. A value of native turns off compression while values of gsm , ulaw (G.711 standard american telephony encoding) or alaw (G.711 standard european telephony encoding) can be used to enable compression.
+ 
+The plugin to use for audio capture is selected using the CapturePluginPath and CapturePlugin configuration parameters. CapturePluginPath is relative to the install directory. CapturePlugin is the full plugin name including extension (e.g. .dll or .so) 
+
+Reporting to OrkTrack can be enabled by setting EnableReporting to true and by specifying the right TrackerHostname 
+
+Configuring the OrkAudio VoIP plugin
+
+VoIP plugin specific configuration is found in the config.xml file under the "VoIpPlugin" tag. It is possible to configure the network device to monitor (i.e. when you have one device dedicated to sniffing). Also for OrkAudio to get voice session direction, remote and local party right, it is necessary to instruct the VoIP plugin how to identify which IP addresses are local telephones (hardphones or softphones) and which are not. To do this, it is possible to give a csv list of IP addresses that are reserved as Media Gateways, i.e. IP addresses that host such services as PBX, PSTN gateway, conferencing or such. Further, it is possible to specify a csv list of local LAN masks (only necessary when LAN masks are not the standard 192.168.x.x or 10.x.x.x or 172.31.x.x). The way the VoIP plugin decides wether an IP address is a local telelephone is as follows: 1. IP Address needs to be on LAN and 2. IP Address cannot be a Media Gateway. 
+
+Running OrkTrack and OrkWeb
+
+Once the OrkWeb installer is used or the war files deployed to Tomcat as described in , run the Tomcat service. You can then access the application from your prefered browser by entering http://localhost:8080/orkweb. Replace localhost by the server hostname or ip address if necessary. The default login is admin/admin.
+
+Testing OrkAudio
+
+Record a simple SIP session
+
+Install OrkAudio on a windows computer that has a SIP softphone installed. Run it on the command line as described in and make a phone call to any number. The call should be logged to the screen with the right metadata. The associated GSM compressed audio file should be found in the OrkAudio install directory in date/time based subfolders as described in 
+
+Generate fake recordings
+
+This involves using the Generator Plugin to create fake audio streams that OrkAudio will record and compress to disk.The CapturePlugin configuration parameter needs to be changed to generator.dll. An existing audio file can be used as the basis of the generated audio streams. This file is specified in the AudioFilename configuration parameter and needs to be a 16 bit samples, mono, 8KHz audio file. 
+Once configured, run OrkAudio, you should see the generated audio streams logged to the console. Audio files should also start appearing in subfolders as described in 
