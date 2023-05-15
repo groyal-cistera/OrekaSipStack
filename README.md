@@ -1,9 +1,6 @@
-## Oreka, an opensource VoIP media capture and retrieval platform
+## OrekaSipStack, an opensource VoIP media capture and retrieval platform
 
 Based on [OrecX](http://www.orecx.com/open-source/) [Oreka](https://github.com/OrecX/Oreka), this project tries to provide a complete Call Recording (SIPREC) solution.  
-
-[![Build Status](https://travis-ci.com/voiceip/oreka.svg?branch=master)](https://travis-ci.com/voiceip/oreka)
-
 
 ### Components
 - **Orkaudio**:  
@@ -13,27 +10,6 @@ Based on [OrecX](http://www.orecx.com/open-source/) [Oreka](https://github.com/O
 - **Orkweb**:   
     Web based user interface for retrieval
     
-### Improvements
-
-**OrkAudio** 
-
-- Support for G729 Codec  
-- CallID Tracking   
-- Upgrade to latest version of libraries.
-
-**OrkTrack**
-
-- Switch to Maven
-- CallID Tracking   
-- Switch to faster logging (Log4j2)
-- Upgrade to java8
-- Metrics via [jmx](https://metrics.dropwizard.io/4.1.2/)
-- Lombork & Aspectj code weaving for auto code generation and metrics  
-
-**Orkweb**:   
-- Switch to Maven
-- Call Play / Download on all platform(s)/OS(es)
-
 
 ### Building
 
