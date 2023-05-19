@@ -708,6 +708,8 @@ bool TrySipRegister(EthernetHeaderStruct* ethernetHeader, IpHeaderStruct* ipHead
 		if(userAgentField)
 		{
 			GrabTokenSkipLeadingWhitespacesRegister(userAgentField, sipEnd, info->m_userAgent);
+			LOG4CXX_INFO(s_sipPacketLog,"USER AGENT = " + info->m_userAgent);
+
 		}
 
 		VoIpSessionsSingleton::instance()->ReportSipRegister(info);
@@ -1125,17 +1127,18 @@ bool TrySip200Ok(EthernetHeaderStruct* ethernetHeader, IpHeaderStruct* ipHeader,
 			LOG4CXX_DEBUG(s_sipExtractionLog, logMsg);	
 			info->m_codec = rtp_codec;
 
-
 		}
 
 		if(fromField)
 		{
+			CStdString from;
+			GrabLine(fromField, sipEnd, from);
+
 			if(s_sipExtractionLog->isDebugEnabled())
 			{
-				CStdString from;
-				GrabLine(fromField, sipEnd, from);
 				LOG4CXX_DEBUG(s_sipExtractionLog, "from: " + from);
 			}
+
 
 			char* fromFieldEnd = memFindEOL(fromField, sipEnd);
 
@@ -1162,6 +1165,7 @@ bool TrySip200Ok(EthernetHeaderStruct* ethernetHeader, IpHeaderStruct* ipHeader,
 					GrabSipUriUser(fromField, fromFieldEnd, info->m_from);
 				}
 			}
+			info->m_fullfrom = from; 
 		}
 		if(toField)
 		{
@@ -1620,11 +1624,12 @@ bool TrySipInvite(EthernetHeaderStruct* ethernetHeader, IpHeaderStruct* ipHeader
 
 		if(fromField)
 		{
+			CStdString from;
+			GrabLine(fromField, sipEnd, from);
+
 			if(s_sipExtractionLog->isDebugEnabled())
 			{
-				CStdString from;
-				GrabLine(fromField, sipEnd, from);
-				LOG4CXX_DEBUG(s_sipExtractionLog, "from: " + from);
+				LOG4CXX_DEBUG(s_sipExtractionLog, "INVITE from: " + from);
 			}
 
 			char* fromFieldEnd = memFindEOL(fromField, sipEnd);
@@ -1656,6 +1661,8 @@ bool TrySipInvite(EthernetHeaderStruct* ethernetHeader, IpHeaderStruct* ipHeader
 				}
 				GrabSipUriDomain(fromField, fromFieldEnd, info->m_fromDomain);
 			}
+			info->m_fullfrom = from;
+			LOG4CXX_DEBUG(s_sipExtractionLog, "INVITE FULL from: " + info->m_fullfrom);
 		}
 		if(toField)
 		{
@@ -1774,6 +1781,7 @@ bool TrySipInvite(EthernetHeaderStruct* ethernetHeader, IpHeaderStruct* ipHeader
 		if(userAgentField)
 		{
 			GrabTokenSkipLeadingWhitespaces(userAgentField, sipEnd, info->m_userAgent);
+			LOG4CXX_INFO(s_sipPacketLog, "USER AGENT = " + info->m_userAgent);
 		}
 		if(audioField)
 		{

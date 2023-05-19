@@ -34,6 +34,7 @@ public:
 	struct in_addr m_senderIp;
 	struct in_addr m_receiverIp;
 	CStdString m_from;
+	CStdString m_fullfrom;
 	CStdString m_to;
 	CStdString m_contact;
 	CStdString m_callId;
@@ -60,6 +61,8 @@ public:
 	char m_receiverMac[6];
 	CStdString m_fromRtpPort;
 	CStdString m_from;
+	CStdString m_fullfrom;
+	
 	CStdString m_to;
 	CStdString m_callId;
 	CStdString m_replacesId;
@@ -118,6 +121,7 @@ public:
 	struct in_addr m_senderIp;
 	struct in_addr m_receiverIp;
 	CStdString m_from;
+	CStdString m_fullfrom;
 	CStdString m_to;
 	CStdString m_fromDomain;
 	CStdString m_toDomain;
@@ -167,6 +171,7 @@ public:
 	struct in_addr m_senderIp;
 	struct in_addr m_receiverIp;
 	CStdString m_from;
+	CStdString m_fullfrom;
 	CStdString m_to;	
 	char m_from_mac[6];
 	char m_to_mac[6];
