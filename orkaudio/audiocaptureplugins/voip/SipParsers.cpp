@@ -1165,6 +1165,8 @@ bool TrySip200Ok(EthernetHeaderStruct* ethernetHeader, IpHeaderStruct* ipHeader,
 					GrabSipUriUser(fromField, fromFieldEnd, info->m_from);
 				}
 			}
+			// we need to remove any double quotes and replace with single quotes. 
+			std::replace( from.begin(), from.end(), '"', '\''); // replace all double quote to single quote
 			info->m_fullfrom = from; 
 		}
 		if(toField)
@@ -1661,8 +1663,8 @@ bool TrySipInvite(EthernetHeaderStruct* ethernetHeader, IpHeaderStruct* ipHeader
 				}
 				GrabSipUriDomain(fromField, fromFieldEnd, info->m_fromDomain);
 			}
+			std::replace( from.begin(), from.end(), '"', '\''); // replace all double quote to single quote
 			info->m_fullfrom = from;
-			LOG4CXX_DEBUG(s_sipExtractionLog, "INVITE FULL from: " + info->m_fullfrom);
 		}
 		if(toField)
 		{
